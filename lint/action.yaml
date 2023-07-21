@@ -54,10 +54,16 @@ runs:
       if: steps.check_yarn_lock.outputs.files_exists == 'false'
       shell: bash
       run: npm run ${{ inputs.lint-scripts }}
+      env:
+        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
+        NPM_TOKEN: ${{ inputs.npm-token }}
     - name: Run lint scripts (yarn)
       if: steps.check_yarn_lock.outputs.files_exists == 'true'
       shell: bash
       run: yarn ${{ inputs.lint-scripts }}
+      env: 
+        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
+        NPM_TOKEN: ${{ inputs.npm-token }}
     - name: Pre-commit
       uses: open-turo/action-pre-commit@v1
     - if: ${{ inputs.internal-dependency-prefixes != '' }}
